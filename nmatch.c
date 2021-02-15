@@ -96,7 +96,7 @@ int* naiveMatch(char* pattern, char* string)
 	// make sure memory was allocated successfully
 	if(p==NULL)
 	{
-		help();
+		fprintf(stderr, "Could not allocate memory. Aborting.\n");
 		exit(1);		
 	}
 
@@ -127,6 +127,11 @@ int* naiveMatch(char* pattern, char* string)
 				// if about to exceed, allocate double the memory
 				allocated_mem += 4096;
 				p = realloc(p, sizeof(int) * allocated_mem);
+				if(p==NULL)
+				{
+					fprintf(stderr, "Could not allocate memory. Aborting.\n");
+					exit(1);		
+				}
 				p[m] = i;
 				++m;
 			}
@@ -135,7 +140,11 @@ int* naiveMatch(char* pattern, char* string)
 	
 	// allocate sizeof(int) extra bytes for one last digit
 	p = realloc(p, sizeof(int) * allocated_mem + 1);
-	
+	if(p==NULL)
+	{
+		fprintf(stderr, "Could not allocate memory. Aborting.\n");
+		exit(1);		
+	}
 
 	//last element (-1) will inform main function to break when found
 	p[m] = -1;
@@ -169,6 +178,26 @@ int main(int argc, char* argv[])
 	{
 		printf("Usage: nmatch PATTERN STRING\nTry 'nmatch --help' for more information\n");
 		exit(1);		
+	}
+
+	// check that input is characters only
+
+	for (int i=0;i<strlen(argv[1]);++i)
+	{
+		if(isalpha(argv[1][i])==0)
+		{
+		printf("Usage: nmatch PATTERN STRING\nTry 'nmatch --help' for more information\n");
+		exit(1);			
+		}
+	}
+
+	for (int i=0;i<strlen(argv[2]);++i)
+	{
+		if(isalpha(argv[2][i])==0)
+		{
+		printf("Usage: nmatch PATTERN STRING\nTry 'nmatch --help' for more information\n");
+		exit(1);			
+		}
 	}
 
 	// declare a pointer-to-int to store matches indices
