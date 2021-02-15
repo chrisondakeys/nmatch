@@ -180,11 +180,10 @@ int main(int argc, char* argv[])
 		exit(1);		
 	}
 
-	// check that input is characters only
-
+	// check that input is characters only. No special characters allowed except '-'
 	for (int i=0;i<strlen(argv[1]);++i)
 	{
-		if(isalpha(argv[1][i])==0)
+		if(isalpha(argv[1][i])==0 && argv[1][i]!= '-')
 		{
 		printf("Usage: nmatch PATTERN STRING\nTry 'nmatch --help' for more information\n");
 		exit(1);			
@@ -193,7 +192,7 @@ int main(int argc, char* argv[])
 
 	for (int i=0;i<strlen(argv[2]);++i)
 	{
-		if(isalpha(argv[2][i])==0)
+		if(isalpha(argv[2][i])==0 && argv[2][i]!= '-')
 		{
 		printf("Usage: nmatch PATTERN STRING\nTry 'nmatch --help' for more information\n");
 		exit(1);			
